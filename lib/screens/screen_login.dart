@@ -76,6 +76,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -94,7 +95,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
               right: 0,
               left: 0,
               child: Container(
-                padding: const EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: screenHeight * 0.04),
                 color: Colors.black,
                 child: Container(
                   height: 300,
@@ -241,6 +242,26 @@ class _ScreenLoginState extends State<ScreenLogin> {
               ),
             ),
             buildBottomHalfContainer(false),
+            Flexible(
+                flex: 15,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.copyright_rounded,
+                        size: 20,
+                      ),
+                      Text(
+                        'www.thottungal.net.in',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
           ],
         )),
       ),
