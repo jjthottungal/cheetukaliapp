@@ -94,7 +94,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
               right: 0,
               left: 0,
               child: Container(
-                padding: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 10),
                 color: Colors.black,
                 child: Container(
                   height: 300,
