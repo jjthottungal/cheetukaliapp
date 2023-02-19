@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cheetukaliapp/utils/statefulwrapper.dart';
 import 'package:get/get.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 
 class ScreenSplash extends StatelessWidget {
   const ScreenSplash({super.key});
@@ -10,6 +11,9 @@ class ScreenSplash extends StatelessWidget {
     return StatefulWrapper(
       onInit: () {
         //initialization();
+        //Hide top status bar
+        StatusBarControl.setHidden(true, animation: StatusBarAnimation.SLIDE);
+
         Future.delayed(const Duration(seconds: 2)).then((value) {
           Get.offNamed('/login');
         });

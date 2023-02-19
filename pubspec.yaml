@@ -50,6 +50,7 @@ dependencies:
   sliver_tools: ^0.2.8
   collection: ^1.16.0
   flutter_sticky_header: ^0.6.4
+  status_bar_control: ^3.2.1
 
 dev_dependencies:
   flutter_test:

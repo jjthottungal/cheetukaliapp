@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:status_bar_control/status_bar_control.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -32,6 +33,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
   @override
   void initState() {
     super.initState();
+    //Hide top status bar
+    StatusBarControl.setHidden(true, animation: StatusBarAnimation.SLIDE);
+
     loginModel = LoginModel(userId: 'Guest', password: '');
     //Check Interconnectvity
     _getConnectivity();
@@ -40,6 +44,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
   @override
   void dispose() {
     super.dispose();
+    //Show stausbar
+    StatusBarControl.setHidden(false);
+
     if (!_pinController.isBlank!) {
       _pinController.dispose();
     }
@@ -72,11 +79,13 @@ class _ScreenLoginState extends State<ScreenLogin> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        /*
         appBar: AppBar(
           //elevation: 10,
           title: const Text('Weekly Gathering'),
           //centerTitle: true,
         ),
+        */
         body: SafeArea(
             child: Stack(
           children: [
@@ -85,58 +94,62 @@ class _ScreenLoginState extends State<ScreenLogin> {
               right: 0,
               left: 0,
               child: Container(
-                height: 300,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/Background.jpg"),
-                        fit: BoxFit.fill)),
+                padding: const EdgeInsets.only(top: 30),
+                color: Colors.black,
                 child: Container(
-                  padding: const EdgeInsets.only(top: 90, left: 20),
-                  //color: const Color(0xFF3b5999).withOpacity(.75),
-                  //color: Color.fromARGB(255, 183, 165, 61).withOpacity(.6),
-                  color: Colors.blue.shade500.withOpacity(.5),
-                  //color: Colors.green.shade100.withOpacity(.5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                            text: "Welcome to ",
-                            style: TextStyle(
-                              fontSize: 20,
-                              letterSpacing: 2,
-                              color: Colors.yellow[700],
-                              //color: Colors.black,
-                            ),
-                            children: [
-                              TextSpan(
-                                text: 'WG',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.yellow[700],
-                                ),
-                              )
-                            ]),
-                      ),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const Text(
-                        'Sign-in to Continue',
-                        style: TextStyle(
-                          letterSpacing: 1,
-                          color: Colors.white,
+                  height: 300,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/Background.jpg"),
+                          fit: BoxFit.fill)),
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 55, left: 20),
+                    //color: const Color(0xFF3b5999).withOpacity(.75),
+                    //color: Color.fromARGB(255, 183, 165, 61).withOpacity(.6),
+                    color: Colors.black12.withOpacity(.1),
+                    //color: Colors.green.shade100.withOpacity(.5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                              text: "Welcome to ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                letterSpacing: 2,
+                                color: Colors.yellow[700],
+                                //color: Colors.black,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'WG',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.yellow[700],
+                                  ),
+                                )
+                              ]),
                         ),
-                      )
-                    ],
+                        const SizedBox(
+                          height: 9,
+                        ),
+                        const Text(
+                          'Sign-in to Continue',
+                          style: TextStyle(
+                            letterSpacing: 1,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
             buildBottomHalfContainer(true),
             Positioned(
-              top: 200,
+              top: 240,
               child: Container(
                 height: 200,
                 padding: const EdgeInsets.all(20),
@@ -245,7 +258,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
   Widget buildBottomHalfContainer(bool showShadow) {
     return Positioned(
-      top: 360,
+      top: 400,
       right: 0,
       left: 0,
       child: Center(
