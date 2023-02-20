@@ -29,6 +29,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
   //Check Internet connection
   late StreamSubscription subscription;
   bool isDeviceConnected = false;
+  // ignore: prefer_typing_uninitialized_variables
+  late var screenSize;
 
   @override
   void initState() {
@@ -80,6 +82,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         /*
         appBar: AppBar(
           //elevation: 10,
@@ -88,15 +91,12 @@ class _ScreenLoginState extends State<ScreenLogin> {
         ),
         */
         body: SafeArea(
-            child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              child: Container(
-                padding: EdgeInsets.only(top: screenHeight * 0.04),
-                color: Colors.black,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                right: 0,
+                left: 0,
                 child: Container(
                   height: 300,
                   decoration: const BoxDecoration(
@@ -105,10 +105,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           fit: BoxFit.fill)),
                   child: Container(
                     padding: const EdgeInsets.only(top: 55, left: 20),
-                    //color: const Color(0xFF3b5999).withOpacity(.75),
-                    //color: Color.fromARGB(255, 183, 165, 61).withOpacity(.6),
-                    color: Colors.black12.withOpacity(.1),
-                    //color: Colors.green.shade100.withOpacity(.5),
+                    //color: Colors.black12.withOpacity(.1),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -147,123 +144,128 @@ class _ScreenLoginState extends State<ScreenLogin> {
                   ),
                 ),
               ),
-            ),
-            buildBottomHalfContainer(true),
-            Positioned(
-              top: 240,
-              child: Container(
-                height: 200,
-                padding: const EdgeInsets.all(20),
-                width: Get.size.width - 120,
-                margin: const EdgeInsets.symmetric(horizontal: 60),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 15,
-                          spreadRadius: 5),
-                    ]),
-                child: Column(
-                  children: [
-                    // ignore: avoid_unnecessary_containers
-                    Container(
-                        child: const Text(
-                      'SIGN-IN',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                    )),
-                    Container(
-                      margin: const EdgeInsets.only(top: 3),
-                      height: 1,
-                      width: 59,
-                      color: Colors.orange,
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      height: 85,
-                      //color: Colors.black12,
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Form(
-                        key: formkey,
-                        child: TextFormField(
-                          controller: _pinController,
-                          //readOnly: true,
-                          autofocus: false,
-                          obscureText: true,
-                          keyboardType: TextInputType.number,
-                          maxLength: 4,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                          ],
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(
-                              Icons.lock,
-                              color: Colors.blue,
-                            ),
-                            //prefixIconColor: Colors.blue,
-                            counterText: '',
-                            contentPadding: const EdgeInsets.only(
-                                top: 20, left: 15, bottom: 20, right: 10),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20)),
-                            labelText: 'Pin Number',
-                            hintText: 'Enter pin',
-                            floatingLabelAlignment:
-                                FloatingLabelAlignment.center,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            //floatingLabelAlignment: FloatingLabelAlignment.center,
-                            labelStyle: const TextStyle(
-                                fontSize: 17, color: Colors.blue),
-                          ),
-                          validator: ((value) {
-                            if (value == null || value == '') {
-                              return 'Enter pin';
-                            } else if (value.length < 4) {
-                              return 'Pin must be 4 digit ';
-                            }
-                            return null;
-                          }),
-                          onSaved: (newValue) {
-                            setState(() {
-                              _pin = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            buildBottomHalfContainer(false),
-            Flexible(
-                flex: 15,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.copyright_rounded,
-                        size: 20,
-                      ),
-                      Text(
-                        'www.thottungal.net.in',
+              buildBottomHalfContainer(true),
+              Positioned(
+                top: 240,
+                child: Container(
+                  height: 200,
+                  padding: const EdgeInsets.all(20),
+                  width: Get.size.width - 120,
+                  margin: const EdgeInsets.symmetric(horizontal: 60),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 15,
+                            spreadRadius: 5),
+                      ]),
+                  child: Column(
+                    children: [
+                      // ignore: avoid_unnecessary_containers
+                      Container(
+                          child: const Text(
+                        'SIGN-IN',
                         style: TextStyle(
-                          fontSize: 14,
+                            fontSize: 16,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold),
+                      )),
+                      Container(
+                        margin: const EdgeInsets.only(top: 3),
+                        height: 1,
+                        width: 59,
+                        color: Colors.orange,
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        height: 85,
+                        //color: Colors.black12,
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Form(
+                          key: formkey,
+                          child: TextFormField(
+                            controller: _pinController,
+                            //readOnly: true,
+                            autofocus: false,
+                            obscureText: true,
+                            keyboardType: TextInputType.number,
+                            maxLength: 4,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9]')),
+                            ],
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: Colors.blue,
+                              ),
+                              //prefixIconColor: Colors.blue,
+                              counterText: '',
+                              contentPadding: const EdgeInsets.only(
+                                  top: 20, left: 15, bottom: 20, right: 10),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              labelText: 'Pin Number',
+                              hintText: 'Enter pin',
+                              floatingLabelAlignment:
+                                  FloatingLabelAlignment.center,
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              //floatingLabelAlignment: FloatingLabelAlignment.center,
+                              labelStyle: const TextStyle(
+                                  fontSize: 17, color: Colors.blue),
+                            ),
+                            validator: ((value) {
+                              if (value == null || value == '') {
+                                return 'Enter pin';
+                              } else if (value.length < 4) {
+                                return 'Pin must be 4 digit ';
+                              }
+                              return null;
+                            }),
+                            onSaved: (newValue) {
+                              setState(() {
+                                _pin = newValue!;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
                   ),
-                )),
-          ],
-        )),
+                ),
+              ),
+              buildBottomHalfContainer(false),
+              Positioned(
+                top: screenHeight - 20,
+                child: Container(
+                  width: Get.size.width,
+                  //color: Colors.yellow,
+                  padding: const EdgeInsets.only(left: 100, right: 100),
+                  child: Center(
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.copyright_rounded,
+                          size: 17,
+                        ),
+                        Text(
+                          'www.thottungal.net.in',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
