@@ -11,7 +11,6 @@ import 'package:cheetukaliapp/screens/screen_splash.dart';
 //import 'package:cheetukaliapp/screens/test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -57,9 +56,9 @@ class MyApp extends StatelessWidget {
       ),
       getPages: [
         /*GetPage(
-            name: '/logintest',
-            page: () => const ScreenLoginTest(),
-            transition: Transition.noTransition), */
+              name: '/logintest',
+              page: () => const ScreenLoginTest(),
+              transition: Transition.noTransition), */
         GetPage(
             name: '/splash',
             page: () => const ScreenSplash(),
@@ -72,11 +71,11 @@ class MyApp extends StatelessWidget {
             name: '/home',
             page: () => ScreenHome(),
             transition: Transition.noTransition),
-/*      GetPage(
-            name: '/test',
-            page: () => const TestScreen(),
-            transition: Transition.noTransition),
-        */
+        /*      GetPage(
+              name: '/test',
+              page: () => const TestScreen(),
+              transition: Transition.noTransition),
+          */
         GetPage(
             name: '/detail',
             page: () => ScreenCheetukaliDtls(),
