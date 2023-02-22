@@ -1,4 +1,4 @@
-package com.example.cheetukaliapp
+package com.jecko.cheetukaliapp
 
 import io.flutter.embedding.android.FlutterActivity
 
