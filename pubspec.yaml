@@ -50,6 +50,9 @@ dependencies:
   collection: ^1.16.0
   flutter_sticky_header: ^0.6.4
   status_bar_control: ^3.2.1
+  firebase_core: ^2.7.0
+  firebase_messaging: ^14.2.5
+  flutter_local_notifications: ^13.0.0
 
 dev_dependencies:
   flutter_test:

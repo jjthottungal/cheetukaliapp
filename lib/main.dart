@@ -1,14 +1,16 @@
 import 'dart:io';
 // ignore: unused_import
 import 'dart:ui';
+import 'package:cheetukaliapp/controllers/utils_controller.dart';
 import 'package:cheetukaliapp/screens/screen_addevent.dart';
 import 'package:cheetukaliapp/screens/screen_addwinner.dart';
 import 'package:cheetukaliapp/screens/screen_cheetukalidtls.dart';
 import 'package:cheetukaliapp/screens/screen_home.dart';
-//import 'package:cheetukaliapp/screens/screen_logintest.dart';
 import 'package:cheetukaliapp/screens/screen_login.dart';
 import 'package:cheetukaliapp/screens/screen_splash.dart';
-//import 'package:cheetukaliapp/screens/test.dart';
+import 'package:cheetukaliapp/services/local_notifications.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,23 +23,44 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void main() {
+//Define background message handler
+Future<void> backgroundHandler(RemoteMessage message) async {
+  //print(" This is message from background");
+  //print(message.data.toString());
+  //print(message.notification!.title);
+  //print(message.notification!.body);
+}
+
+void main() async {
   //Just resolve http certificate issues
   HttpOverrides.global = MyHttpOverrides();
 
   // ignore: unused_local_variable
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  //FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
+  //Initialize firebase messaging service
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  LocalNotificationService.initilize();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
-  // This widget is the root of your application.clear
+  //Declare and Initialize Controller
+  final utilsController = Get.put(UtilsController());
+
+  Future<void> getDeviceToken() async {
+    final FirebaseMessaging fcm = FirebaseMessaging.instance;
+    var token = await fcm.getToken();
+    utilsController.deviceToken.value = token.toString();
+    //print(token);
+  }
+
   @override
   Widget build(BuildContext context) {
+    getDeviceToken(); //Receive device token
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Weekly Gathering',

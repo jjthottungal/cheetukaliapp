@@ -47,6 +47,14 @@ class CheetuKaliController extends GetxController {
     GetUserListAll();
   }
 
+  //Push Notification message recieved
+  void dataHasChanged() {
+    GetCheetukaliListMonthly();
+    GetPlayerChart();
+    GetFamilyChart();
+    GetCheetukaliDtlsAll();
+  }
+
   // ignore: non_constant_identifier_names
   /* void GetCheetukaliList() async {
     String url = Urls.baseUrl + Urls.cheetukalilistUrl;

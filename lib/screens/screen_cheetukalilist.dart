@@ -1,14 +1,15 @@
 import 'package:cheetukaliapp/controllers/apimanger_controller.dart';
 import 'package:cheetukaliapp/controllers/cheetukalilist_controller.dart';
 import 'package:cheetukaliapp/models/cheetunkalilistmonthlymodel.dart';
+import 'package:cheetukaliapp/services/firebase_message_listener.dart';
 import 'package:flutter/material.dart';
-//import 'package:cheetukaliapp/screens/news_section_widget.dart';
 import 'package:get/get.dart';
 import 'package:cheetukaliapp/utils/dialog_helper.dart';
 import 'package:cheetukaliapp/widgets/custom_widgets.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sliver_tools/sliver_tools.dart';
+import 'package:cheetukaliapp/utils/statefulwrapper.dart';
 
 enum Actions { delete }
 
@@ -26,18 +27,24 @@ class ScreenCheetukaliList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetX<CheetuKaliController>(
-      builder: (controller) {
-        if (!controller.isListLoading.value || controller.needRefresh.value) {
-          controller.needRefresh.value = false;
-          controller.deleteDrawer.value = false;
-          return CustomScrollView(
-            slivers: buildNews(news: controller.cheetukalilistmonthly),
-          );
-        } else {
-          return CustomWidgets.customProgressIndicator();
-        }
+    return StatefulWrapper(
+      onInit: () {
+        //Call firebase push notification events
+        NotificationListenerProvider().registerNotification();
       },
+      child: GetX<CheetuKaliController>(
+        builder: (controller) {
+          if (!controller.isListLoading.value || controller.needRefresh.value) {
+            controller.needRefresh.value = false;
+            controller.deleteDrawer.value = false;
+            return CustomScrollView(
+              slivers: buildNews(news: controller.cheetukalilistmonthly),
+            );
+          } else {
+            return CustomWidgets.customProgressIndicator();
+          }
+        },
+      ),
     );
   }
 

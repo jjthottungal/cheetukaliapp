@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "752616066492",
+    "project_id": "wgappmessaging",
+    "storage_bucket": "wgappmessaging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752616066492:android:e2b2d4ef57ad208091afb9",
+        "android_client_info": {
+          "package_name": "com.jecko.cheetukaliapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752616066492-thge343pr2ahe0c5qfkhs5jq8pdj9u2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhAxIx95vFQ43rLrCFRqzH-CA7zs3pve4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752616066492-thge343pr2ahe0c5qfkhs5jq8pdj9u2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

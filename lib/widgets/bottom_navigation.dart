@@ -23,6 +23,7 @@ class BottomNavigation extends StatelessWidget {
             ],
           ),
           child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
               elevation: 10,
               currentIndex: controller.selectedIndexNotifier.value,
               onTap: (newIndex) {
