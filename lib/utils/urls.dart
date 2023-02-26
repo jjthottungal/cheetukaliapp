@@ -18,8 +18,8 @@ class Urls {
 
   //Firebase Push Notification
   static String firebaseUrl = 'https://fcm.googleapis.com/fcm/send';
-  static String firebaseServerKey =
-      'key=AAAArztpzbw:APA91bED7qsrN-ST__LFQvUgSbFvzIwAGFLyMPs63sY2CvY0A_jKDyOczPodAmp92m-fFGLx3bGUFeqlr8VEAKqYgqDYdJi2cLAKogBlJhAqyh4llamhAwKSZ7NghOtvgZ3nRKh6dRis';
+  static String firebaseServerKey = '';
+
   static String notificationImageUrl =
       'https://nodejs.thottungal.net.in/firebase/wg_notification.png';
 
