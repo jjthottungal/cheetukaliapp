@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:cheetukaliapp/controllers/cheetukalilist_controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cheetukaliapp/utils/urls.dart';
 
 class ScreenAddWinner extends StatefulWidget {
   const ScreenAddWinner({super.key});
@@ -45,6 +46,7 @@ class _ScreenAddWinnerState extends State<ScreenAddWinner> {
 
   //Callback fucntion for OK button pressed
   void _dialogOkButtonPressedforlogOut() {
+    Urls.isLoggedIn = false; //Set logged out
     Get.offAllNamed('/login');
   }
 
@@ -65,7 +67,10 @@ class _ScreenAddWinnerState extends State<ScreenAddWinner> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             //elevation: 10,
-            title: const Text('Weekly Gathering'),
+            title: const Text(
+              'Weekly Gathering',
+              style: TextStyle(fontSize: 20),
+            ),
             //centerTitle: true,
             leading: IconButton(
                 onPressed: () {

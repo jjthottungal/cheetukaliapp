@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cheetukaliapp/models/addeventmodel.dart';
 import 'package:cheetukaliapp/models/addwinnermodel.dart';
 import 'package:cheetukaliapp/models/delwinnermodel.dart';
@@ -115,6 +117,36 @@ class ApiManagerController extends GetxController {
       return 'Logged';
     } else if (response.statusCode == 404) {
       return 'Invalid pin';
+    } else {
+      return 'Invalid Api request';
+      //throw Exception('Failed to update!');
+    }
+  }
+
+//Sending Push Notification via Firebase
+  Future<String> sendPushNotification() async {
+    String url = Urls.firebaseUrl;
+    final msgBody = {
+      "to": "/topics/WGData",
+      "notification": {
+        "body": "Event/Winner data changed",
+        "title": "WGApp Data",
+        "android_channel_id": "WGpushnotification",
+        "sound": true,
+        "image": Urls.notificationImageUrl,
+      },
+      "priority": "high"
+    };
+
+    final response = await http.post(Uri.parse(url),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+          HttpHeaders.authorizationHeader: Urls.firebaseServerKey
+        },
+        body: json.encode(msgBody));
+
+    if (response.statusCode == 200) {
+      return 'Sucess';
     } else {
       return 'Invalid Api request';
       //throw Exception('Failed to update!');

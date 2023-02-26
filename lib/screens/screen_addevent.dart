@@ -1,6 +1,7 @@
 import 'package:cheetukaliapp/controllers/apimanger_controller.dart';
 import 'package:cheetukaliapp/models/addeventmodel.dart';
 import 'package:cheetukaliapp/utils/dialog_helper.dart';
+import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -63,6 +64,7 @@ class _ScreenAddEventState extends State<ScreenAddEvent> {
 
   //Callback fucntion for OK button pressed
   void _dialogOkButtonPressedforlogOut() {
+    Urls.isLoggedIn = false; //Set logged out
     Get.offAllNamed('/login');
   }
 
@@ -83,7 +85,10 @@ class _ScreenAddEventState extends State<ScreenAddEvent> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             //elevation: 10,
-            title: const Text('Weekly Gathering'),
+            title: const Text(
+              'Weekly Gathering',
+              style: TextStyle(fontSize: 20),
+            ),
             //centerTitle: true,
             leading: IconButton(
                 onPressed: () {

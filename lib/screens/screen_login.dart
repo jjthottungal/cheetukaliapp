@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:status_bar_control/status_bar_control.dart';
+import 'package:cheetukaliapp/utils/urls.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -333,7 +334,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
 
                               if (value == 'Logged') {
                                 //Sucessfully Login
-
+                                Urls.isLoggedIn = true;
                                 //DialogHelper.okcancelDialog(
                                 //    true, 'Login Successfull');
 

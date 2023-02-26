@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cheetukaliapp/controllers/cheetukalilist_controller.dart';
 import 'package:cheetukaliapp/screens/screen_cheetukalilist.dart';
 import 'package:cheetukaliapp/screens/screen_fam_chart.dart';
+import 'package:cheetukaliapp/screens/screen_message.dart';
 import 'package:cheetukaliapp/screens/screen_player_chart.dart';
 import 'package:cheetukaliapp/utils/dialog_helper.dart';
 import 'package:cheetukaliapp/widgets/bottom_navigation.dart';
@@ -10,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:cheetukaliapp/utils/statefulwrapper.dart';
+import 'package:cheetukaliapp/utils/urls.dart';
 
 // ignore: must_be_immutable
 class ScreenHome extends StatelessWidget {
@@ -28,6 +30,13 @@ class ScreenHome extends StatelessWidget {
     ScreenCheetukaliList(),
     ScreenPlayerChart(),
     ScreenFamChart()
+  ];
+
+  final _pagesAdmin = [
+    ScreenCheetukaliList(),
+    ScreenPlayerChart(),
+    ScreenFamChart(),
+    ScreenMessage()
   ];
 
   void _getConnectivity() =>
@@ -53,6 +62,7 @@ class ScreenHome extends StatelessWidget {
 
   //Callback fucntion for OK button pressed
   void _dialogOkButtonPressedforlogOut() {
+    Urls.isLoggedIn = false; //Set logged out
     Get.offAllNamed('/login');
   }
 
@@ -75,7 +85,10 @@ class ScreenHome extends StatelessWidget {
           backgroundColor: Colors.white,
           appBar: AppBar(
             //elevation: 10,
-            title: const Text('Weekly Gathering'),
+            title: const Text(
+              'Weekly Gathering',
+              style: TextStyle(fontSize: 20),
+            ),
             //centerTitle: true,
             actions: [
               IconButton(
@@ -109,7 +122,11 @@ class ScreenHome extends StatelessWidget {
           bottomNavigationBar: BottomNavigation(),
           body: SafeArea(child: GetX<CheetuKaliController>(
             builder: (controller) {
-              return _pages[controller.selectedIndexNotifier.value];
+              if (Urls.isAdminRole) {
+                return _pagesAdmin[controller.selectedIndexNotifier.value];
+              } else {
+                return _pages[controller.selectedIndexNotifier.value];
+              }
             },
           )),
         ),

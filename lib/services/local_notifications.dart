@@ -8,6 +8,7 @@ class LocalNotificationService {
 
   static final AndroidInitializationSettings androidSettings =
       AndroidInitializationSettings("@mipmap/ic_launcher");
+
   static final DarwinInitializationSettings iosSettings =
       DarwinInitializationSettings(
           requestAlertPermission: true,
@@ -25,10 +26,20 @@ class LocalNotificationService {
   }
 
   static void showNotificationOnForeground(RemoteMessage message) async {
+    final styleInfo = BigPictureStyleInformation(
+      DrawableResourceAndroidBitmap("wg_notification"),
+      hideExpandedLargeIcon: true,
+    );
+
     final notificationDetail = NotificationDetails(
       android: AndroidNotificationDetails(
           "WGpushnotification", "WGpushnotificationchannel",
-          importance: Importance.max, priority: Priority.high, playSound: true),
+          importance: Importance.max,
+          priority: Priority.high,
+          playSound: true,
+          largeIcon: DrawableResourceAndroidBitmap("wg_notification"),
+          channelShowBadge: true,
+          styleInformation: styleInfo),
       iOS: DarwinNotificationDetails(
           presentAlert: true, presentBadge: true, presentSound: true),
     );

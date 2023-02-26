@@ -1,6 +1,7 @@
 import 'dart:io';
 // ignore: unused_import
 import 'dart:ui';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cheetukaliapp/controllers/utils_controller.dart';
 import 'package:cheetukaliapp/screens/screen_addevent.dart';
 import 'package:cheetukaliapp/screens/screen_addwinner.dart';
@@ -26,9 +27,6 @@ class MyHttpOverrides extends HttpOverrides {
 //Define background message handler
 Future<void> backgroundHandler(RemoteMessage message) async {
   //print(" This is message from background");
-  //print(message.data.toString());
-  //print(message.notification!.title);
-  //print(message.notification!.body);
 }
 
 void main() async {
@@ -39,6 +37,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //Initialize firebase messaging service
   await Firebase.initializeApp();
+  await FirebaseMessaging.instance.subscribeToTopic('WGData');
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initilize();
 
@@ -51,7 +50,11 @@ class MyApp extends StatelessWidget {
   //Declare and Initialize Controller
   final utilsController = Get.put(UtilsController());
 
+  //Store firebase device token
   Future<void> getDeviceToken() async {
+    //Request Persmissions
+    await FirebaseMessaging.instance.requestPermission();
+
     final FirebaseMessaging fcm = FirebaseMessaging.instance;
     var token = await fcm.getToken();
     utilsController.deviceToken.value = token.toString();
