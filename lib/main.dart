@@ -1,7 +1,6 @@
 import 'dart:io';
 // ignore: unused_import
 import 'dart:ui';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cheetukaliapp/controllers/utils_controller.dart';
 import 'package:cheetukaliapp/screens/screen_addevent.dart';
 import 'package:cheetukaliapp/screens/screen_addwinner.dart';
