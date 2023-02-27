@@ -21,7 +21,7 @@ class Urls {
   static String fcmKey = '';
 
   static String notificationImageUrl =
-      'https://thottungal.net.in/firebase/wg_notification.png';
+      'https://thottungal.net.in/firebase/wg_notification.jpg';
 
   //Variables
   static bool isLoggedIn = false;
