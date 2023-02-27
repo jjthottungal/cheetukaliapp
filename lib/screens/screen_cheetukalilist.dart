@@ -2,6 +2,7 @@ import 'package:cheetukaliapp/controllers/apimanger_controller.dart';
 import 'package:cheetukaliapp/controllers/cheetukalilist_controller.dart';
 import 'package:cheetukaliapp/models/cheetunkalilistmonthlymodel.dart';
 import 'package:cheetukaliapp/services/firebase_message_listener.dart';
+import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cheetukaliapp/utils/dialog_helper.dart';
@@ -114,7 +115,8 @@ class ScreenCheetukaliList extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Slidable(
-                        enabled: !kaliListController.deleteDrawer.value
+                        enabled: !kaliListController.deleteDrawer.value &&
+                                Urls.isAdminRole
                             ? true
                             : false,
                         endActionPane: ActionPane(

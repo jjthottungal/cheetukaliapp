@@ -2,6 +2,7 @@ import 'package:cheetukaliapp/controllers/apimanger_controller.dart';
 import 'package:cheetukaliapp/models/delwinnermodel.dart';
 import 'package:cheetukaliapp/utils/dialog_helper.dart';
 import 'package:cheetukaliapp/utils/statefulwrapper.dart';
+import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:cheetukaliapp/widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -66,7 +67,8 @@ class ScreenCheetukaliDtls extends StatelessWidget {
             ],
           ),
           floatingActionButton: Visibility(
-            visible: (arguments[0] == kaliListController.lastEventId.value),
+            visible: (arguments[0] == kaliListController.lastEventId.value &&
+                Urls.isAdminRole),
             child: FloatingActionButton.extended(
               onPressed: () async {
                 await Get.toNamed('/addwinner', arguments: [arguments[0]]);
@@ -159,7 +161,8 @@ class ScreenCheetukaliDtls extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(24.0),
                                   child: Slidable(
                                     enabled: arguments[0] ==
-                                            controller.lastEventId.value
+                                                controller.lastEventId.value &&
+                                            Urls.isAdminRole
                                         ? true
                                         : false,
                                     endActionPane: ActionPane(

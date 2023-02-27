@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:cheetukaliapp/models/addeventmodel.dart';
 import 'package:cheetukaliapp/models/addwinnermodel.dart';
 import 'package:cheetukaliapp/models/delwinnermodel.dart';
@@ -112,8 +112,15 @@ class ApiManagerController extends GetxController {
         body: json.encode(requestModel.toJson()));
     //Progress Indicator  off
     DialogHelper.hideLoading();
+    //To extract the response body message
+    var res = json.decode(response.body);
 
     if (response.statusCode == 200) {
+      //Set Global variable
+      Urls.isLoggedIn = true;
+      Urls.isAdminRole = res[0]['IsAdmin'];
+      Urls.fcmKey = res[0]['FCMKey'];
+
       return 'Logged';
     } else if (response.statusCode == 404) {
       return 'Invalid pin';
@@ -141,7 +148,7 @@ class ApiManagerController extends GetxController {
     final response = await http.post(Uri.parse(url),
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
-          HttpHeaders.authorizationHeader: Urls.firebaseServerKey
+          HttpHeaders.authorizationHeader: Urls.fcmKey
         },
         body: json.encode(msgBody));
 

@@ -63,6 +63,7 @@ class ScreenHome extends StatelessWidget {
   //Callback fucntion for OK button pressed
   void _dialogOkButtonPressedforlogOut() {
     Urls.isLoggedIn = false; //Set logged out
+    Urls.isAdminRole = false;
     Get.offAllNamed('/login');
   }
 
@@ -102,7 +103,8 @@ class ScreenHome extends StatelessWidget {
           floatingActionButton: GetX<CheetuKaliController>(
             builder: (controller) {
               return Visibility(
-                visible: (controller.selectedIndexNotifier.value == 0),
+                visible: (controller.selectedIndexNotifier.value == 0 &&
+                    Urls.isAdminRole),
                 child: FloatingActionButton.extended(
                   onPressed: () async {
                     await Get.toNamed('/addevent');

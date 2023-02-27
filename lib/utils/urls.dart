@@ -18,12 +18,12 @@ class Urls {
 
   //Firebase Push Notification
   static String firebaseUrl = 'https://fcm.googleapis.com/fcm/send';
-  static String firebaseServerKey = '';
+  static String fcmKey = '';
 
   static String notificationImageUrl =
-      'https://nodejs.thottungal.net.in/firebase/wg_notification.png';
+      'https://thottungal.net.in/firebase/wg_notification.png';
 
   //Variables
   static bool isLoggedIn = false;
-  static bool isAdminRole = true;
+  static bool isAdminRole = false;
 }

@@ -45,7 +45,7 @@ class LocalNotificationService {
     );
 
     await _notificationsPlugin.show(
-        DateTime.now().microsecond,
+        0, //DateTime.now().microsecond,
         message.notification!.title,
         message.notification!.body,
         notificationDetail,

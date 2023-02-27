@@ -65,6 +65,7 @@ class _ScreenAddEventState extends State<ScreenAddEvent> {
   //Callback fucntion for OK button pressed
   void _dialogOkButtonPressedforlogOut() {
     Urls.isLoggedIn = false; //Set logged out
+    Urls.isAdminRole = false;
     Get.offAllNamed('/login');
   }
 

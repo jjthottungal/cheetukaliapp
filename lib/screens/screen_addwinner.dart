@@ -47,6 +47,7 @@ class _ScreenAddWinnerState extends State<ScreenAddWinner> {
   //Callback fucntion for OK button pressed
   void _dialogOkButtonPressedforlogOut() {
     Urls.isLoggedIn = false; //Set logged out
+    Urls.isAdminRole = false;
     Get.offAllNamed('/login');
   }
 
