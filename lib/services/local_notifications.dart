@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
@@ -25,9 +28,23 @@ class LocalNotificationService {
     );
   }
 
+//Bigpictire extract from URL from server
+//Future<Uint8List> getByteArrayFromUrl(String url) async {
+//    final http.Response response = await http.get(Uri.parse(url));
+//    return response.bodyBytes;
+//  }
+
   static void showNotificationOnForeground(RemoteMessage message) async {
+    final http.Response response =
+        await http.get(Uri.parse(Urls.notificationImageUrl));
+
+    final ByteArrayAndroidBitmap largeIcon =
+        ByteArrayAndroidBitmap(response.bodyBytes);
+    //final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
+    //    await _getByteArrayFromUrl('https://dummyimage.com/400x800'));
+
     final styleInfo = BigPictureStyleInformation(
-      DrawableResourceAndroidBitmap("wg_notification"),
+      largeIcon,
       hideExpandedLargeIcon: true,
     );
 
@@ -37,7 +54,8 @@ class LocalNotificationService {
           importance: Importance.max,
           priority: Priority.high,
           playSound: true,
-          largeIcon: DrawableResourceAndroidBitmap("wg_notification"),
+          largeIcon:
+              largeIcon, //DrawableResourceAndroidBitmap("wg_notification"),
           channelShowBadge: true,
           styleInformation: styleInfo),
       iOS: DarwinNotificationDetails(
