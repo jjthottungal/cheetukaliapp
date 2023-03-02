@@ -2,7 +2,7 @@ class Urls {
   //static String baseUrl = 'http://192.168.10.153:80/api/';
   //static String baseUrl = 'http://10.220.8.228:80/api/';
   //static String baseUrl = 'https://Webapi.oberon.net.in/api/';
-  static String baseUrl = 'https://nodejs.thottungal.net.in/api/';
+  static String baseUrl = 'https://nodejs.thottungal.co.in/api/';
 
   static String cheetukalilistUrl = 'CheetukaliList';
   static String cheetukalilistMonthlyUrl = 'CheetukaliListGroupByMonth';
@@ -21,7 +21,7 @@ class Urls {
   static String fcmKey = '';
 
   static String notificationImageUrl =
-      'https://thottungal.net.in/firebase/wg_notification.jpg';
+      'https://thottungal.co.in/firebase/wg_notification.jpg';
 
   //Variables
   static bool isLoggedIn = false;

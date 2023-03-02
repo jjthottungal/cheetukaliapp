@@ -29,6 +29,13 @@
             {
               "client_id": "752616066492-thge343pr2ahe0c5qfkhs5jq8pdj9u2b.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "752616066492-9dgjgo5kd3g8cee48vtpqlthugucav1t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jecko.cheetukaliapp"
+              }
             }
           ]
         }

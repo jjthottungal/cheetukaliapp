@@ -10,6 +10,7 @@ import 'package:cheetukaliapp/screens/screen_login.dart';
 import 'package:cheetukaliapp/screens/screen_splash.dart';
 import 'package:cheetukaliapp/services/local_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,10 +36,11 @@ void main() async {
   // ignore: unused_local_variable
   WidgetsFlutterBinding.ensureInitialized();
   //Initialize firebase messaging service
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
   await FirebaseMessaging.instance.subscribeToTopic('WGData');
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initilize();
+
 
   runApp(MyApp());
 }
@@ -69,6 +71,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: ThemeData(
         textTheme: ThemeData.light().textTheme.copyWith(
+              // ignore: deprecated_member_use
               bodyText1: const TextStyle(
                 fontSize: 20,
               ),
