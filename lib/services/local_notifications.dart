@@ -16,7 +16,9 @@ class LocalNotificationService {
           requestAlertPermission: true,
           requestBadgePermission: true,
           requestSoundPermission: true,
-          requestCriticalPermission: true);
+          requestCriticalPermission: true,
+          onDidReceiveLocalNotification: (id, title, body, payload) async{
+          });
 
   static void initilize() {
     final InitializationSettings initializationSettings =
@@ -37,14 +39,12 @@ class LocalNotificationService {
     final http.Response response =
         await http.get(Uri.parse(Urls.notificationImageUrl));
 
-    final ByteArrayAndroidBitmap largeIcon =
+    final ByteArrayAndroidBitmap largeIconbigPicture =
         ByteArrayAndroidBitmap(response.bodyBytes);
-    //final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
-    //    await _getByteArrayFromUrl('https://dummyimage.com/400x800'));
-
+    
     final styleInfo = BigPictureStyleInformation(
-      largeIcon,
-      hideExpandedLargeIcon: true,
+    largeIconbigPicture,
+    hideExpandedLargeIcon: true,
     );
 
     final notificationDetail = NotificationDetails(
@@ -54,7 +54,7 @@ class LocalNotificationService {
           priority: Priority.high,
           playSound: true,
           largeIcon:
-              largeIcon, //DrawableResourceAndroidBitmap("wg_notification"),
+              largeIconbigPicture, //DrawableResourceAndroidBitmap("wg_notification"),
           channelShowBadge: true,
           styleInformation: styleInfo),
       iOS: DarwinNotificationDetails(
@@ -67,5 +67,39 @@ class LocalNotificationService {
         message.notification!.body,
         notificationDetail,
         payload: message.data["message"]);
+  }
+
+
+   static void showLocalNotification() async {
+    final http.Response response =
+        await http.get(Uri.parse(Urls.notificationImageUrl));
+
+    final ByteArrayAndroidBitmap largeIconbigPicture =
+        ByteArrayAndroidBitmap(response.bodyBytes);
+    
+    final styleInfo = BigPictureStyleInformation(
+    largeIconbigPicture,
+    hideExpandedLargeIcon: true,
+    );
+
+    final notificationDetail = NotificationDetails(
+      android: AndroidNotificationDetails(
+          "WGpushnotification", "WGpushnotificationchannel",
+          importance: Importance.max,
+          priority: Priority.high,
+          playSound: true,
+          largeIcon:
+              largeIconbigPicture, //DrawableResourceAndroidBitmap("wg_notification"),
+          channelShowBadge: true,
+          styleInformation: styleInfo),
+      iOS: DarwinNotificationDetails(
+          presentAlert: true, presentBadge: true, presentSound: true),
+    );
+
+    await _notificationsPlugin.show(
+        0, //DateTime.now().microsecond,
+        'Sample Local Title',
+        'Sample Local Body',
+        notificationDetail);
   }
 }

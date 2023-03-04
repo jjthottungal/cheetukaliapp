@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 import 'package:cheetukaliapp/controllers/apimanger_controller.dart';
+import 'package:cheetukaliapp/services/local_notifications.dart';
 import 'package:cheetukaliapp/utils/dialog_helper.dart';
 import 'package:cheetukaliapp/utils/statefulwrapper.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class ScreenMessage extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
+                //LocalNotificationService.showLocalNotification();
+                
                 apiManager.sendPushNotification().then((value) {
                   if (value == 'Sucess') {
                     //DialogHelper.okcancelDialog(true, 'Message Sent');
@@ -33,6 +36,7 @@ class ScreenMessage extends StatelessWidget {
                     DialogHelper.okcancelDialog(true, value);
                   }
                 });
+                
               },
               child: const Text('Send Notification'),
             )
