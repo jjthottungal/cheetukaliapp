@@ -36,12 +36,28 @@ void main() async {
   // ignore: unused_local_variable
   WidgetsFlutterBinding.ensureInitialized();
   //Initialize firebase messaging service
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform,);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await FirebaseMessaging.instance.subscribeToTopic('WGData');
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   LocalNotificationService.initilize();
+/*
 
+ AwesomeNotifications().initialize(
+    'resource://drawable/ic_laucher',
+    [
+      NotificationChannel(
+          channelKey: 'basic_channel',
+          channelName: 'basic notifications',
+          channelDescription: 'basic notifications',
+          defaultColor: Colors.teal,
+          importance: NotificationImportance.High,
+          channelShowBadge: true),
+    ],
+  );
 
+*/
   runApp(MyApp());
 }
 

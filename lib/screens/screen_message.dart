@@ -28,7 +28,7 @@ class ScreenMessage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 //LocalNotificationService.showLocalNotification();
-                
+
                 apiManager.sendPushNotification().then((value) {
                   if (value == 'Sucess') {
                     //DialogHelper.okcancelDialog(true, 'Message Sent');
@@ -36,7 +36,6 @@ class ScreenMessage extends StatelessWidget {
                     DialogHelper.okcancelDialog(true, value);
                   }
                 });
-                
               },
               child: const Text('Send Notification'),
             )
