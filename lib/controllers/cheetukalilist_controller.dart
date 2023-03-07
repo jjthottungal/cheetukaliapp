@@ -4,6 +4,7 @@ import 'package:cheetukaliapp/models/cheetukalifamsummmodel.dart';
 import 'package:cheetukaliapp/models/cheetukalisummmodel.dart';
 import 'package:cheetukaliapp/models/cheetunkalilistmonthlymodel.dart';
 import 'package:cheetukaliapp/models/userlistmodel.dart';
+import 'package:cheetukaliapp/services/aes_encryption.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 //import 'package:cheetukaliapp/models/cheetukalilistmodel.dart';
@@ -122,7 +123,12 @@ class CheetuKaliController extends GetxController {
     if (response.statusCode == 200) {
       //var res = json.decode(response.body);
       //var data = res as List;
-      var data = json.decode(response.body).cast<Map<String, dynamic>>();
+      //extract encrypted data alone from body
+      var responseData = json.decode(response.body);
+      //decrypt the data which supposed to be json data string
+      var decryptedData = AesDecryption.decryp(responseData['encryptedData']);
+
+      var data = json.decode(decryptedData).cast<Map<String, dynamic>>();
       cheetukaliSumm = data
           .map<CheetukaliSummModel>(
               (json) => CheetukaliSummModel.fromJson(json))

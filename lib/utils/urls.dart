@@ -26,4 +26,6 @@ class Urls {
   //Variables
   static bool isLoggedIn = false;
   static bool isAdminRole = false;
+  static String enKey = 'MySecretKeyForEncryptionAndDecry';
+  static String enIv = 'helloworldhellow';
 }
