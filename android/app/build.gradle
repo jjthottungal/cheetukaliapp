@@ -21,6 +21,18 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+// Runtime JAR files in the classpath should have the same version.
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def kotlinVersion = "1.6.0"
+        def requested = details.requested
+        if (requested.group == 'org.jetbrains.kotlin') {
+            List<String> list = ['kotlin-stdlib', 'kotlin-stdlib-jdk7', 'kotlin-stdlib-jdk8', 'kotlin-stdlib-common']
+            if (list.contains(requested.name)) { details.useVersion kotlinVersion }
+        }
+    }
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
@@ -81,7 +93,7 @@ flutter {
     source '../..'
 }
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    //implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-}
+//dependencies {
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+//    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+//}

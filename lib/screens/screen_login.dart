@@ -256,7 +256,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           size: 17,
                         ),
                         Text(
-                          'www.thottungal.net.in',
+                          'www.thottungal.co.in',
                           style: TextStyle(fontSize: 15),
                         ),
                       ],
