@@ -119,6 +119,7 @@ class ApiManagerController extends GetxController {
       Urls.isLoggedIn = true;
       Urls.isAdminRole = res[0]['IsAdmin'];
       Urls.fcmKey = res[0]['FCMKey'];
+      Urls.jwtToken = res[0]['jwt_token'];
 
       return 'Logged';
     } else if (response.statusCode == 404) {

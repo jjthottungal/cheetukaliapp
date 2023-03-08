@@ -28,4 +28,5 @@ class Urls {
   static bool isAdminRole = false;
   static String enKey = 'MySecretKeyForEncryptionAndDecry';
   static String enIv = 'helloworldhellow';
+  static String jwtToken = '';
 }

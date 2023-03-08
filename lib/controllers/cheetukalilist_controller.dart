@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:cheetukaliapp/models/cheetukalidtlsmodel.dart';
 import 'package:cheetukaliapp/models/cheetukalifamsummmodel.dart';
 import 'package:cheetukaliapp/models/cheetukalisummmodel.dart';
@@ -110,7 +111,8 @@ class CheetuKaliController extends GetxController {
 
       needRefresh.value = true;
     } else {
-      throw Exception('Failed to load data!');
+      cheetukalilistmonthly = [];
+      //throw Exception('Failed to load data!');
     }
   }
 
@@ -118,11 +120,12 @@ class CheetuKaliController extends GetxController {
   void GetPlayerChart() async {
     String url = Urls.baseUrl + Urls.cheetukalisummUrl;
 
-    final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url), headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: Urls.jwtToken
+    });
 
     if (response.statusCode == 200) {
-      //var res = json.decode(response.body);
-      //var data = res as List;
       //extract encrypted data alone from body
       var responseData = json.decode(response.body);
       //decrypt the data which supposed to be json data string
@@ -134,7 +137,8 @@ class CheetuKaliController extends GetxController {
               (json) => CheetukaliSummModel.fromJson(json))
           .toList();
     } else {
-      throw Exception('Failed to load data!');
+      cheetukaliSumm = [];
+      //throw Exception('Failed to load data!');
     }
   }
 
@@ -145,15 +149,19 @@ class CheetuKaliController extends GetxController {
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      //var res = json.decode(response.body);
-      //var data = res as List;
-      var data = json.decode(response.body).cast<Map<String, dynamic>>();
+      //extract encrypted data alone from body
+      var responseData = json.decode(response.body);
+      //decrypt the data which supposed to be json data string
+      var decryptedData = AesDecryption.decryp(responseData['encryptedData']);
+
+      var data = json.decode(decryptedData).cast<Map<String, dynamic>>();
       cheetukaliFamSumm = data
           .map<CheetukaliFamSummModel>(
               (json) => CheetukaliFamSummModel.fromJson(json))
           .toList();
     } else {
-      throw Exception('Failed to load data!');
+      cheetukaliFamSumm = [];
+      //throw Exception('Failed to load data!');
     }
   }
 
@@ -166,7 +174,8 @@ class CheetuKaliController extends GetxController {
     if (response.statusCode == 200) {
       cheetukalidtlsall = cheetukaliDtlsModelFromJson(response.body);
     } else {
-      throw Exception('Failed to load data!');
+      cheetukalidtlsall = [];
+      //throw Exception('Failed to load data!');
     }
     return response.statusCode;
   }
@@ -189,6 +198,7 @@ class CheetuKaliController extends GetxController {
       userlistwinners = userListModelFromJson(response.body);
       userlisthosts = userlistwinners.where((i) => i.type == 'H').toList();
     } else {
+      userlistwinners = [];
       throw Exception('Failed to load data!');
     }
   }
