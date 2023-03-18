@@ -2,6 +2,7 @@ import 'package:cheetukaliapp/controllers/apimanger_controller.dart';
 import 'package:cheetukaliapp/controllers/cheetukalilist_controller.dart';
 import 'package:cheetukaliapp/models/cheetunkalilistmonthlymodel.dart';
 import 'package:cheetukaliapp/services/firebase_message_listener.dart';
+//import 'package:cheetukaliapp/services/onesignal_message_notification.dart';
 import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +33,7 @@ class ScreenCheetukaliList extends StatelessWidget {
       onInit: () {
         //Call firebase push notification events
         NotificationListenerProvider().registerNotification();
+        //OnesignalNotificationListenerProvider().onesignalRegisterNotification();
       },
       child: GetX<CheetuKaliController>(
         builder: (controller) {

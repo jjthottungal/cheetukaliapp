@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -17,8 +19,7 @@ class LocalNotificationService {
           requestBadgePermission: true,
           requestSoundPermission: true,
           requestCriticalPermission: true,
-          onDidReceiveLocalNotification: (id, title, body, payload) async{
-          });
+          onDidReceiveLocalNotification: (id, title, body, payload) async {});
 
   static void initilize() {
     final InitializationSettings initializationSettings =
@@ -36,15 +37,23 @@ class LocalNotificationService {
 //  }
 
   static void showNotificationOnForeground(RemoteMessage message) async {
-    final http.Response response =
-        await http.get(Uri.parse(Urls.notificationImageUrl));
+    //final http.Response response =
+    //    await http.get(Uri.parse(Urls.notificationImageUrl));
 
-    final ByteArrayAndroidBitmap largeIconbigPicture =
-        ByteArrayAndroidBitmap(response.bodyBytes);
-    
+    //final ByteArrayAndroidBitmap largeIconbigPicture =
+    //    ByteArrayAndroidBitmap(response.bodyBytes);
+
+    final attachmentPicturePath = await _downloadAndSaveFile(
+        Urls.notificationImageUrl,
+        'attachment_img.jpg'); //FilePathAndroidBitmap(attachmentPicturePath),
+
+    //print(attachmentPicturePath);
+    final FilePathAndroidBitmap largeIconbigPicture =
+        FilePathAndroidBitmap(attachmentPicturePath);
+
     final styleInfo = BigPictureStyleInformation(
-    largeIconbigPicture,
-    hideExpandedLargeIcon: true,
+      largeIconbigPicture,
+      hideExpandedLargeIcon: true,
     );
 
     final notificationDetail = NotificationDetails(
@@ -58,7 +67,10 @@ class LocalNotificationService {
           channelShowBadge: true,
           styleInformation: styleInfo),
       iOS: DarwinNotificationDetails(
-          presentAlert: true, presentBadge: true, presentSound: true),
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          attachments: [DarwinNotificationAttachment(attachmentPicturePath)]),
     );
 
     await _notificationsPlugin.show(
@@ -69,37 +81,17 @@ class LocalNotificationService {
         payload: message.data["message"]);
   }
 
-
-   static void showLocalNotification() async {
-    final http.Response response =
-        await http.get(Uri.parse(Urls.notificationImageUrl));
-
-    final ByteArrayAndroidBitmap largeIconbigPicture =
-        ByteArrayAndroidBitmap(response.bodyBytes);
-    
-    final styleInfo = BigPictureStyleInformation(
-    largeIconbigPicture,
-    hideExpandedLargeIcon: true,
-    );
-
-    final notificationDetail = NotificationDetails(
-      android: AndroidNotificationDetails(
-          "WGpushnotification", "WGpushnotificationchannel",
-          importance: Importance.max,
-          priority: Priority.high,
-          playSound: true,
-          largeIcon:
-              largeIconbigPicture, //DrawableResourceAndroidBitmap("wg_notification"),
-          channelShowBadge: true,
-          styleInformation: styleInfo),
-      iOS: DarwinNotificationDetails(
-          presentAlert: true, presentBadge: true, presentSound: true),
-    );
-
-    await _notificationsPlugin.show(
-        0, //DateTime.now().microsecond,
-        'Sample Local Title',
-        'Sample Local Body',
-        notificationDetail);
+  static Future<String> _downloadAndSaveFile(
+      String url, String fileName) async {
+    final Directory directory = await getApplicationDocumentsDirectory();
+    final String filePath = '${directory.path}/$fileName';
+    if (await File(filePath).exists()) {
+      return filePath;
+    } else {
+      final http.Response response = await http.get(Uri.parse(url));
+      final File file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+      return filePath;
+    }
   }
 }
