@@ -3,6 +3,7 @@ import 'package:cheetukaliapp/services/local_notifications.dart';
 import 'package:cheetukaliapp/utils/urls.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'dart:io' show Platform;
 
 class NotificationListenerProvider {
   void registerNotification() async {
@@ -22,7 +23,9 @@ class NotificationListenerProvider {
 
     // Foreground State
     FirebaseMessaging.onMessage.listen((message) {
-      LocalNotificationService.showNotificationOnForeground(message);
+      if (Platform.isAndroid) {
+        LocalNotificationService.showNotificationOnForeground(message);
+      }
       //Once data changed, update all lists for cheetukali data
       kaliListController.dataHasChanged();
       //print(" This is message when Foreground State");

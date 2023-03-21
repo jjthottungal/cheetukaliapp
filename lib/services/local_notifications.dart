@@ -18,7 +18,6 @@ class LocalNotificationService {
           requestAlertPermission: true,
           requestBadgePermission: true,
           requestSoundPermission: true,
-          requestCriticalPermission: true,
           onDidReceiveLocalNotification: (id, title, body, payload) async {});
 
   static void initilize() {
@@ -28,6 +27,8 @@ class LocalNotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: (payload) {},
     );
+
+    FirebaseMessaging.instance.subscribeToTopic('WGData');
   }
 
 //Bigpictire extract from URL from server
@@ -38,10 +39,10 @@ class LocalNotificationService {
 
   static void showNotificationOnForeground(RemoteMessage message) async {
     //final http.Response response =
-    //    await http.get(Uri.parse(Urls.notificationImageUrl));
+    //   await http.get(Uri.parse(Urls.notificationImageUrl));
 
     //final ByteArrayAndroidBitmap largeIconbigPicture =
-    //    ByteArrayAndroidBitmap(response.bodyBytes);
+    //   ByteArrayAndroidBitmap(response.bodyBytes);
 
     final attachmentPicturePath = await _downloadAndSaveFile(
         Urls.notificationImageUrl,
@@ -67,15 +68,16 @@ class LocalNotificationService {
           channelShowBadge: true,
           styleInformation: styleInfo),
       iOS: DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-          attachments: [DarwinNotificationAttachment(attachmentPicturePath)]),
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        attachments: [DarwinNotificationAttachment(attachmentPicturePath)],
+      ),
     );
 
     await _notificationsPlugin.show(
         0, //DateTime.now().microsecond,
-        message.notification!.title,
+        'My Ttitle', //message.notification!.title,
         message.notification!.body,
         notificationDetail,
         payload: message.data["message"]);

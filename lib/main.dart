@@ -39,9 +39,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseMessaging.instance.subscribeToTopic('WGData');
+
+  await FirebaseMessaging.instance
+      .requestPermission(alert: true, badge: true, sound: true);
+  FirebaseMessaging.instance.subscribeToTopic('WGData');
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  //FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+  //    alert: false, badge: false, sound: false);
   LocalNotificationService.initilize();
+
 /*
 
  AwesomeNotifications().initialize(
@@ -80,7 +86,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getDeviceToken(); //Receive device token
+    //getDeviceToken(); //Receive device token
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Weekly Gathering',
